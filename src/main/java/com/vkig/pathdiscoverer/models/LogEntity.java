@@ -22,5 +22,6 @@ public class LogEntity {
     LocalDateTime when;
     String who;
     String what;
+    @Lob
     String result;
 }
