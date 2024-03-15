@@ -1,7 +1,9 @@
 package com.vkig.pathdiscoverer.repositories;
 
+import com.vkig.pathdiscoverer.models.LogEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LogRepository {
+public interface LogRepository extends JpaRepository<LogEntity, Long> {
 }
