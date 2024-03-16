@@ -2,6 +2,7 @@ DOCKER_USERNAME=vkig
 APPLICATION_NAME=pathdiscoverer
 GRADLE_OPTS=-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2
 PATH_DISCOVERER_LOCAL_IP=$(shell hostname -I)
+SHELL := /bin/bash
 
 build:
 	podman build --tag ${DOCKER_USERNAME}:${APPLICATION_NAME}db --build-arg POSTGRES_PASSWORD=password -f Dockerfile.database .
@@ -12,5 +13,6 @@ build:
 	echo "application 2 has been built"
 run: build
 	podman run -d -p 5432:5432 --name ${APPLICATION_NAME}db ${DOCKER_USERNAME}:${APPLICATION_NAME}db
+	c=1; until ping -c1 localhost:5432 >/dev/null 2>&1; do sleep 1; ((c++)) && echo $$c && ((c==5)) && break; done
 	podman run -d -p 8081:8081 --user app1 --name ${APPLICATION_NAME}1 ${DOCKER_USERNAME}:${APPLICATION_NAME}1
 	podman run -d -p 8082:8082 --user app2 --name ${APPLICATION_NAME}2 ${DOCKER_USERNAME}:${APPLICATION_NAME}2
