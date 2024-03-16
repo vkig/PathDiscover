@@ -1,0 +1,24 @@
+FROM eclipse-temurin:17-jdk-alpine
+
+VOLUME /tmp
+
+ARG POSTGRES_PASSWORD
+ARG PORT
+ARG USERNAME
+ARG HOST_LOCAL_IP
+
+ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+ENV POSTGRES_DB_NAME=log
+ENV PORT=$PORT
+ENV HOST_LOCAL_IP=$HOST_LOCAL_IP
+
+WORKDIR /app
+
+RUN adduser -DH -G root $USERNAME
+
+COPY . .
+
+RUN sh ./gradlew -Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2 clean bootJar
+
+RUN cp build/libs/PathDiscoverer-*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
