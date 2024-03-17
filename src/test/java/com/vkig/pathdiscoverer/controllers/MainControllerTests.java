@@ -6,6 +6,7 @@ import com.vkig.pathdiscoverer.services.DiscovererService;
 import com.vkig.pathdiscoverer.services.GeneratorService;
 import com.vkig.pathdiscoverer.services.LoggerService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -19,8 +20,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -84,5 +87,12 @@ public class MainControllerTests {
         this.mockMvc.perform(get("/history")).andExpect(content()
                 .json("[{'who': 'user', 'when': '"+ now.toString()
                         +"', 'what': {'folder': '.', 'extension': 'txt'}, 'result': ['1.txt','2.txt']}]"));
+    }
+
+    @Test
+    void createRandomDirectoryTreeShouldCallServiceWithSameParameter() throws Exception {
+        String parameter = "root";
+        this.mockMvc.perform(post("/gen").param("root", parameter));
+        Mockito.verify(generatorService, Mockito.times(1)).generateDirectoryTree(parameter);
     }
 }
