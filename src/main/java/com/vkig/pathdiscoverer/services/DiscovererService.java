@@ -3,6 +3,8 @@ package com.vkig.pathdiscoverer.services;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,11 +14,14 @@ import java.util.stream.Stream;
 
 @Service
 public class DiscovererService {
-    public static List<String> findUnique(String folder, String extension){
+    public List<String> findUnique(String folder, String extension) throws Exception {
+        if(!Files.isDirectory(Path.of(folder))){
+            throw new Exception("The specified path is not a valid directory!");
+        }
         return findUniqueRecursion(folder, extension).stream().sorted().toList();
     }
 
-    public static Set<String> findUniqueRecursion(String folder, String extension){
+    private Set<String> findUniqueRecursion(String folder, String extension){
         File path = new File(folder);
         File[] filesInFolder = path.listFiles();
         Set<String> uniqueFiles = new HashSet<>();

@@ -21,17 +21,23 @@ import java.util.Map;
 public class MainController {
     private LoggerService loggerService;
     private GeneratorService generatorService;
+    private DiscovererService discovererService;
 
     @GetMapping("/unique")
     @ResponseBody
     public ResponseEntity<?> getUnique(@RequestParam(required = false) String folder, @RequestParam(required = false) String extension){
         if(extension == null || extension.isEmpty() || folder == null || folder.isEmpty()){
-            return ResponseEntity.badRequest().body(Map.of("error:", "The sent parameters: '" + folder + "' and '" + extension + "' are not correct!"));
+            return ResponseEntity.badRequest().body(Map.of("error", "The sent parameters: '" + folder + "' and '" + extension + "' are not correct!"));
         }
         if(extension.startsWith(".")){
             extension = extension.substring(1);
         }
-        List<String> uniqueFiles = DiscovererService.findUnique(folder, extension);
+        List<String> uniqueFiles = null;
+        try {
+            uniqueFiles = discovererService.findUnique(folder, extension);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
         loggerService.log(new UniqueRequestParams(folder, extension), uniqueFiles);
         return ResponseEntity.ok(uniqueFiles);
     }
