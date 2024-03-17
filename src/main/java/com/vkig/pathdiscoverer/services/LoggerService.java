@@ -5,6 +5,8 @@ import com.vkig.pathdiscoverer.dtos.UniqueRequestParams;
 import com.vkig.pathdiscoverer.models.LogEntity;
 import com.vkig.pathdiscoverer.repositories.LogRepository;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -16,6 +18,8 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
 public class LoggerService {
     private LogRepository logRepository;
 
