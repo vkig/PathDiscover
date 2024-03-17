@@ -3,11 +3,13 @@ package com.vkig.pathdiscoverer.controllers;
 import com.vkig.pathdiscoverer.dtos.LogItem;
 import com.vkig.pathdiscoverer.dtos.UniqueRequestParams;
 import com.vkig.pathdiscoverer.services.DiscovererService;
+import com.vkig.pathdiscoverer.services.GeneratorService;
 import com.vkig.pathdiscoverer.services.LoggerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,6 +20,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class MainController {
     private LoggerService loggerService;
+    private GeneratorService generatorService;
 
     @GetMapping("/unique")
     @ResponseBody
@@ -37,5 +40,19 @@ public class MainController {
     @ResponseBody
     public List<LogItem> getHistory(){
         return loggerService.generateHistory();
+    }
+
+    @PostMapping("/gen")
+    @ResponseBody
+    public ResponseEntity<?> createRandomDirectoryTree(@RequestParam(required = false) String root){
+        if(root == null || root.isEmpty()){
+            return ResponseEntity.badRequest().body(Map.of("error", "The root request parameter can't be null or empty!"));
+        }
+        try {
+            generatorService.generateDirectoryTree(root);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+        return ResponseEntity.ok(Map.of("message", "Random directory tree was successfully created."));
     }
 }

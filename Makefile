@@ -11,8 +11,8 @@ build:
 	echo "application 1 has been built"
 	podman build --tag ${DOCKER_USERNAME}:${APPLICATION_NAME}2 --build-arg POSTGRES_PASSWORD=password --build-arg PORT=8082 --build-arg USERNAME=app2 --build-arg PATH_DISCOVERER_LOCAL_IP=${PATH_DISCOVERER_LOCAL_IP} -f Dockerfile.application .
 	echo "application 2 has been built"
-run:
-	podman run -d -p 5432:5432 --name ${APPLICATION_NAME}db ${DOCKER_USERNAME}:${APPLICATION_NAME}db
+run: build
+	podman run -d -p 5432:5432 --systemd always --name ${APPLICATION_NAME}db ${DOCKER_USERNAME}:${APPLICATION_NAME}db
 	c=1; until ping -c1 localhost:5432 >/dev/null 2>&1; do sleep 5; ((c++)) && echo $$c && ((c==5)) && break; done
-	podman run -d -p 8081:8081 --user app1 --name ${APPLICATION_NAME}1 ${DOCKER_USERNAME}:${APPLICATION_NAME}1
-	podman run -d -p 8082:8082 --user app2 --name ${APPLICATION_NAME}2 ${DOCKER_USERNAME}:${APPLICATION_NAME}2
+	podman run -d -p 8081:8081 --user app1 --systemd always --name ${APPLICATION_NAME}1 ${DOCKER_USERNAME}:${APPLICATION_NAME}1
+	podman run -d -p 8082:8082 --user app2 --systemd always --name ${APPLICATION_NAME}2 ${DOCKER_USERNAME}:${APPLICATION_NAME}2
