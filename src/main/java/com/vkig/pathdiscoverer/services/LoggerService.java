@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Logger service to be able to track which WebApplication got the incoming request on <i>/unique</i> endpoint
+ * Also tracking the time of the endpoint call, the request parameters and the result of the PathDiscovery logic.
+ */
 @Service
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +27,12 @@ import java.util.List;
 public class LoggerService {
     private LogRepository logRepository;
 
+    /**
+     * This method is to track who, when, with what parameters called the <i>/unique</i> endpoint
+     * and what was the result of the PathDiscovery logic.
+     * @param params The request params in a wrapper object.
+     * @param result The list of distinct filenames (result of the discoverer logic).
+     */
     public void log(UniqueRequestParams params, List<String> result){
         LogEntity logEntity = new LogEntity();
         String whoAmIResult = "";
@@ -44,6 +54,11 @@ public class LoggerService {
         logRepository.save(logEntity);
     }
 
+    /**
+     * This method maps the entity that is stored in the database ({@link LogEntity}) to 'user-friendly'
+     * format ({{@link LogItem}})
+     * @return The list of 'user-friendly' log items.
+     */
     public List<LogItem> generateHistory(){
         List<LogEntity> logEntities = logRepository.findAll();
         return logEntities.stream().map(logEntity -> {

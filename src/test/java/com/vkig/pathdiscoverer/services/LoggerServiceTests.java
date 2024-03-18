@@ -1,6 +1,5 @@
 package com.vkig.pathdiscoverer.services;
 
-import ch.qos.logback.core.testUtil.MockInitialContext;
 import com.vkig.pathdiscoverer.dtos.LogItem;
 import com.vkig.pathdiscoverer.dtos.UniqueRequestParams;
 import com.vkig.pathdiscoverer.models.LogEntity;
@@ -9,12 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

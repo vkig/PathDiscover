@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.vkig.pathdiscoverer"},{"l":"com.vkig.pathdiscoverer.configurations"},{"l":"com.vkig.pathdiscoverer.controllers"},{"l":"com.vkig.pathdiscoverer.dtos"},{"l":"com.vkig.pathdiscoverer.models"},{"l":"com.vkig.pathdiscoverer.repositories"},{"l":"com.vkig.pathdiscoverer.services"}];updateSearchResults();

@@ -1,0 +1,7 @@
+com.vkig.pathdiscoverer
+com.vkig.pathdiscoverer.configurations
+com.vkig.pathdiscoverer.controllers
+com.vkig.pathdiscoverer.dtos
+com.vkig.pathdiscoverer.models
+com.vkig.pathdiscoverer.repositories
+com.vkig.pathdiscoverer.services
