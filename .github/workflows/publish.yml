@@ -30,6 +30,10 @@ jobs:
           context: .
           file: ./Dockerfile.application
           push: true
-          build-args: POSTGRES_PASSWORD=password,PORT=8081,USERNAME=app1,PATH_DISCOVERER_LOCAL_IP=localhost
+          build-args: |
+            "POSTGRES_PASSWORD=password"
+            "PORT=8081"
+            "USERNAME=app1"
+            "PATH_DISCOVERER_LOCAL_IP=localhost"
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
