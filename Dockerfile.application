@@ -14,7 +14,7 @@ VOLUME /tmp
 
 WORKDIR /app
 
-RUN adduser -DH $USERNAME
+RUN adduser -DH -G root $USERNAME
 
 COPY . .
 
