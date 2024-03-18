@@ -7,6 +7,7 @@ import com.vkig.pathdiscoverer.repositories.LogRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -21,11 +22,12 @@ import java.util.List;
  * Also tracking the time of the endpoint call, the request parameters and the result of the PathDiscovery logic.
  */
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
 public class LoggerService {
-    private LogRepository logRepository;
+    private final LogRepository logRepository;
+
+    public LoggerService(LogRepository logRepository){
+        this.logRepository = logRepository;
+    }
 
     /**
      * This method is to track who, when, with what parameters called the <i>/unique</i> endpoint
