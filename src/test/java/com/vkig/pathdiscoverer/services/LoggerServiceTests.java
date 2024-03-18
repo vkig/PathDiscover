@@ -5,12 +5,13 @@ import com.vkig.pathdiscoverer.dtos.UniqueRequestParams;
 import com.vkig.pathdiscoverer.models.LogEntity;
 import com.vkig.pathdiscoverer.repositories.LogRepository;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,11 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@ExtendWith(MockitoExtension.class)
 public class LoggerServiceTests {
-    private final LogRepository logRepository = Mockito.mock(LogRepository.class);
-    private final LoggerService loggerService = new LoggerService(logRepository);
+    @Mock
+    private LogRepository logRepository;
+    @InjectMocks
+    private LoggerService loggerService;
 
     @Test
     void logShouldSaveTheParamsTheResultWithTheCurrentTime(){

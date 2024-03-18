@@ -23,12 +23,10 @@ import java.util.List;
  * Also tracking the time of the endpoint call, the request parameters and the result of the PathDiscovery logic.
  */
 @Service
-@Setter
-@Getter
-@NoArgsConstructor
 public class LoggerService {
-    private LogRepository logRepository;
+    private final LogRepository logRepository;
 
+    @Autowired
     public LoggerService(LogRepository logRepository){
         this.logRepository = logRepository;
     }

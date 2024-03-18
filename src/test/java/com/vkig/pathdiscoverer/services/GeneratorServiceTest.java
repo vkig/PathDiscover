@@ -2,6 +2,9 @@ package com.vkig.pathdiscoverer.services;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,10 +15,10 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@ExtendWith(MockitoExtension.class)
 public class GeneratorServiceTest {
-    GeneratorService generatorService = new GeneratorService();
+    @InjectMocks
+    GeneratorService generatorService;
     @Test
     void generateDirectoryTreeShouldThrowExceptionIfRootIsNotValid() throws Exception {
         assertThrows(Exception.class, ()->generatorService.generateDirectoryTree("randomnotexistingdirectory"));

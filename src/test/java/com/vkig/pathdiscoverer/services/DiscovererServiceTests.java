@@ -2,9 +2,18 @@ package com.vkig.pathdiscoverer.services;
 
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -14,10 +23,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@SpringBootTest
-@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@ExtendWith(MockitoExtension.class)
 public class DiscovererServiceTests {
-    DiscovererService discovererService = new DiscovererService();
+    @InjectMocks
+    DiscovererService discovererService;
     @Test
     void findUniqueShouldThrowExceptionIfRootIsNotValid() throws Exception {
         assertThrows(Exception.class, ()->discovererService.findUnique("randomnotexistingdirectory", "txt"));
