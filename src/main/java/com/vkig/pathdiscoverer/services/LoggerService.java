@@ -5,6 +5,7 @@ import com.vkig.pathdiscoverer.dtos.UniqueRequestParams;
 import com.vkig.pathdiscoverer.models.LogEntity;
 import com.vkig.pathdiscoverer.repositories.LogRepository;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,11 @@ import java.util.List;
  * Also tracking the time of the endpoint call, the request parameters and the result of the PathDiscovery logic.
  */
 @Service
+@Setter
+@Getter
+@NoArgsConstructor
 public class LoggerService {
-    private final LogRepository logRepository;
+    private LogRepository logRepository;
 
     public LoggerService(LogRepository logRepository){
         this.logRepository = logRepository;
