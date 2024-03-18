@@ -15,6 +15,7 @@ from the host computer by visiting either of `localhost:8081` or `localhost:8082
 - Java 17 or above (if you want to run the application on the host computer)
 - Podman
 - Make
+- Python (to run the database healthcheck.py - it can be replaced with less safe sleep 5 in the Makefile)
 
 ## Endpoints:
 

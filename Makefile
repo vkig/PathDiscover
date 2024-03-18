@@ -13,6 +13,6 @@ build:
 	echo "application 2 has been built"
 run: build
 	podman run -d -p 5432:5432 --systemd always --name ${APPLICATION_NAME}db ${DOCKER_USERNAME}:${APPLICATION_NAME}db
-	c=1; until ping -c1 localhost:5432 >/dev/null 2>&1; do sleep 5; ((c++)) && echo $$c && ((c==5)) && break; done
+	python healthcheck.py
 	podman run -d -p 8081:8081 --user app1 --systemd always --name ${APPLICATION_NAME}1 ${DOCKER_USERNAME}:${APPLICATION_NAME}1
 	podman run -d -p 8082:8082 --user app2 --systemd always --name ${APPLICATION_NAME}2 ${DOCKER_USERNAME}:${APPLICATION_NAME}2
