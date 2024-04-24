@@ -38,3 +38,4 @@ from the host computer by visiting either of `localhost:8081` or `localhost:8082
 - `make run`
 - Visit `localhost:8081/unique?folder=.&extension=java`
 - Visit `localhost:8082/history`
+
