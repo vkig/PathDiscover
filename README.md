@@ -29,6 +29,7 @@ from the host computer by visiting either of `localhost:8081` or `localhost:8082
   - root: parameter to specify where to start random directory tree generation
   - return: success or error message
 - `/docs`: redirects to generated, static JavaDoc
+- `/swagger-ui`: To see the visual summary of the application
 
 ## Quick start:
 
